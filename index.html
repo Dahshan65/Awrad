@@ -23,7 +23,7 @@ header p{margin:6px 0 0;font-size:14px;opacity:.85}
 #bar h2{margin:0;font-size:18px;flex:1}
 #pages{overflow-y:auto;flex:1;background:#fff;padding:8px 0}
 #pages img{display:block;width:100%;max-width:760px;margin:0 auto 6px;height:auto}
-#share{display:flex;align-items:center;justify-content:center;gap:8px;background:#25d366;color:#fff;border:0;border-radius:12px;padding:16px;font-size:19px;font-family:inherit;cursor:pointer;width:100%}
+#share{text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;background:#25d366;color:#fff;border:0;border-radius:12px;padding:16px;font-size:19px;font-family:inherit;cursor:pointer;width:100%}
 footer{text-align:center;padding:18px 16px 28px;color:#555;font-size:15px}
 #homeWrap{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
 #home{flex:1;width:100%;max-width:640px;grid-auto-rows:minmax(46px,1fr);gap:9px;padding:11px 12px}
@@ -69,8 +69,8 @@ const S=[
 ["حزب السيف",83,95],["حزب الهمزة",96,113],["ورد السحر",114,146],["النصائح الرحمانية",162,177]];
 const ar=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
 const home=document.getElementById("home"),rd=document.getElementById("reader"),pg=document.getElementById("pages");
-const sh=document.createElement("button");sh.id="share";sh.textContent="مشاركة التطبيق عبر واتساب";
-sh.onclick=()=>{const u=location.href.split("#")[0];window.open("https://wa.me/?text="+encodeURIComponent("تطبيق الأوراد - الطريقة الخلوتية الجامعة الرحمانية\n"+u),"_blank")};
+const sh=document.createElement("a");sh.id="share";sh.textContent="مشاركة التطبيق عبر واتساب";sh.target="_blank";sh.rel="noopener";
+sh.href="https://wa.me/?text="+encodeURIComponent("تطبيق الأوراد - الطريقة الخلوتية الجامعة الرحمانية\n"+location.href.split("#")[0].split("?")[0]);
 S.forEach((s,i)=>{const b=document.createElement("button");b.className="btn";
  b.innerHTML=`<span>${s[0]}</span><small>ص ${ar(s[1])}${s[2]>s[1]?" – "+ar(s[2]):""}</small>`;
  b.onclick=()=>open(i,true);home.appendChild(b)});
