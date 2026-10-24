@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#1f4d3a">
+<link rel="manifest" href="manifest.json">
+<title>الأوراد</title>
+<style>
+:root{--g:#1f4d3a;--g2:#2d6a4f;--bg:#f6f1e4;--ink:#222}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:"Segoe UI",Tahoma,"Noto Naskh Arabic",sans-serif;background:var(--bg);color:var(--ink)}
+header{background:var(--g);color:#fff;padding:22px 16px;text-align:center}
+header h1{margin:0;font-size:26px}
+header p{margin:6px 0 0;font-size:14px;opacity:.85}
+#home{max-width:520px;margin:0 auto;padding:16px;display:grid;gap:12px}
+.btn{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid #d9cfb4;border-right:6px solid var(--g2);border-radius:12px;padding:18px 16px;font-size:20px;font-family:inherit;color:var(--ink);cursor:pointer;text-align:right;width:100%}
+.btn:active{background:#eaf3ee}
+.btn small{font-size:13px;color:#777}
+#reader{display:none;position:fixed;inset:0;background:#fff;flex-direction:column}
+#bar{background:var(--g);color:#fff;display:flex;align-items:center;gap:10px;padding:10px 12px}
+#bar button{background:none;border:1px solid #fff8;color:#fff;border-radius:8px;font-size:16px;padding:6px 12px;font-family:inherit}
+#bar h2{margin:0;font-size:18px;flex:1}
+#pages{overflow-y:auto;flex:1;background:#fff;padding:8px 0}
+#pages img{display:block;width:100%;max-width:760px;margin:0 auto 6px;height:auto}
+</style>
+</head>
+<body>
+<div id="homeWrap">
+<header><h1>الأوراد</h1><p>الطريقة الخلوتية الجامعة الرحمانية</p></header>
+<div id="home"></div>
+</div>
+<div id="reader">
+<div id="bar"><button id="back">رجوع ›</button><h2 id="title"></h2></div>
+<div id="pages"></div>
+</div>
+<script>
+const S=[
+["ورد الدرة الشريفة",33,43],["ورد اللطيف",44,44],["تحفة الإخلاص",45,58],["ورد القرآن الليلي",59,82],
+["حزب السيف",83,95],["حزب الهمزة",96,113],["ورد السحر",114,146],["النصائح الرحمانية",162,177]];
+const ar=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
+const home=document.getElementById("home"),rd=document.getElementById("reader"),pg=document.getElementById("pages");
+S.forEach((s,i)=>{const b=document.createElement("button");b.className="btn";
+ b.innerHTML=`<span>${s[0]}</span><small>ص ${ar(s[1])}${s[2]>s[1]?" – "+ar(s[2]):""}</small>`;
+ b.onclick=()=>open(i,true);home.appendChild(b)});
+function open(i,push){const s=S[i];document.getElementById("title").textContent=s[0];pg.innerHTML="";
+ for(let p=s[1];p<=s[2];p++){const im=new Image();im.loading="lazy";im.alt="";im.src=`pages/${p}.webp`;im.style.minHeight="60vh";im.onload=()=>im.style.minHeight="";pg.appendChild(im)}
+ rd.style.display="flex";pg.scrollTop=0;if(push)history.pushState({r:1},"")}
+function close(){rd.style.display="none"}
+document.getElementById("back").onclick=()=>history.state&&history.state.r?history.back():close();
+addEventListener("popstate",close);
+if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body></html>
