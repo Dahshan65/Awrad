@@ -26,7 +26,7 @@ header p{margin:6px 0 0;font-size:14px;opacity:.85}
 #share{text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;background:#25d366;color:#fff;border:0;border-radius:12px;padding:16px;font-size:19px;font-family:inherit;cursor:pointer;width:100%}
 footer{text-align:center;padding:18px 16px 28px;color:#555;font-size:15px}
 #homeWrap{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
-#home{flex:1;width:100%;max-width:640px;grid-auto-rows:minmax(46px,1fr);gap:9px;padding:11px 12px}
+#home{flex:1;width:100%;max-width:640px;grid-auto-rows:minmax(42px,1fr);gap:9px;padding:11px 12px}
 .btn{font-size:clamp(21px,5.6vw,30px);padding:3px 18px;border-right-width:9px}
 .btn small{font-size:clamp(14px,3.6vw,18px)}
 #share{font-size:clamp(19px,5vw,26px);padding:0}
@@ -43,7 +43,7 @@ header h1{color:#f6e7b4;text-shadow:0 2px 4px #0008}
 header p{color:#cfe8d8}
 .btn{background:linear-gradient(#fffaf0,#f3ead0);border:2px solid var(--gold);border-right-width:2px;border-radius:16px;box-shadow:inset 0 0 0 3px #fffaf0,inset 0 0 0 4px #b9d3c3,0 3px 8px #0005;color:#14402e}
 .btn:active{background:#dcefe3}
-.btn span{padding-right:46px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke='%23c9a94f' stroke-width='2'%3E%3Crect x='8' y='8' width='24' height='24'/%3E%3Crect x='8' y='8' width='24' height='24' transform='rotate(45 20 20)'/%3E%3C/g%3E%3Ccircle cx='20' cy='20' r='4' fill='%231f4d3a'/%3E%3C/svg%3E") right center/34px 34px no-repeat;line-height:34px;font-weight:600}
+.btn span{white-space:nowrap;padding-right:46px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke='%23c9a94f' stroke-width='2'%3E%3Crect x='8' y='8' width='24' height='24'/%3E%3Crect x='8' y='8' width='24' height='24' transform='rotate(45 20 20)'/%3E%3C/g%3E%3Ccircle cx='20' cy='20' r='4' fill='%231f4d3a'/%3E%3C/svg%3E") right center/34px 34px no-repeat;line-height:34px;font-weight:600}
 .btn small{color:#5b7a69;background:#e3efe7;border-radius:10px;padding:3px 10px}
 #share{border:2px solid var(--gold);border-radius:16px;background:linear-gradient(#2fbf6c,#1c9a52);box-shadow:inset 0 0 0 3px #ffffff33,0 3px 8px #0005}
 footer{color:#f6e7b4}
@@ -64,19 +64,21 @@ footer::before{content:"✦ ✦ ✦";display:block;color:var(--gold);letter-spac
 <div id="pages"></div>
 </div>
 <script>
+const R=(a,b)=>Array.from({length:b-a+1},(_,i)=>(a+i)+".webp");
 const S=[
-["ورد الدرة الشريفة",33,43],["ورد اللطيف",44,44],["تحفة الإخلاص",45,58],["ورد القرآن الليلي",59,82],
-["حزب السيف",83,95],["حزب الهمزة",96,113],["ورد السحر",114,146],["النصائح الرحمانية",162,177]];
+["ورد الدرة الشريفة",R(33,43),"ص ٣٣ – ٤٣"],["ورد اللطيف",R(44,44),"ص ٤٤"],["تحفة الإخلاص",R(45,58),"ص ٤٥ – ٥٨"],["ورد القرآن الليلي",R(59,82),"ص ٥٩ – ٨٢"],
+["حزب السيف",R(83,95),"ص ٨٣ – ٩٥"],["حزب الهمزة",R(96,113),"ص ٩٦ – ١١٣"],["ورد السحر",R(114,146),"ص ١١٤ – ١٤٦"],["النصائح الرحمانية",R(162,177),"ص ١٦٢ – ١٧٧"],
+["منظومة أسماء الله الحسنى",[1,2,3,4,5].map(i=>"asma-"+i+".webp"),""]];
 const ar=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
 const home=document.getElementById("home"),rd=document.getElementById("reader"),pg=document.getElementById("pages");
 const sh=document.createElement("a");sh.id="share";sh.textContent="مشاركة التطبيق عبر واتساب";sh.target="_blank";sh.rel="noopener";
 sh.href="https://wa.me/?text="+encodeURIComponent("تطبيق الأوراد - الطريقة الخلوتية الجامعة الرحمانية\n"+location.href.split("#")[0].split("?")[0]);
 S.forEach((s,i)=>{const b=document.createElement("button");b.className="btn";
- b.innerHTML=`<span>${s[0]}</span><small>ص ${ar(s[1])}${s[2]>s[1]?" – "+ar(s[2]):""}</small>`;
+ b.innerHTML=`<span>${s[0]}</span>${s[2]?`<small>${s[2]}</small>`:''}`;
  b.onclick=()=>open(i,true);home.appendChild(b)});
 home.appendChild(sh);
 function open(i,push){const s=S[i];document.getElementById("title").textContent=s[0];pg.innerHTML="";
- for(let p=s[1];p<=s[2];p++){const im=new Image();im.loading="lazy";im.alt="";im.src=`${p}.webp`;im.style.minHeight="60vh";im.onload=()=>im.style.minHeight="";pg.appendChild(im)}
+ s[1].forEach(f=>{const im=new Image();im.loading="lazy";im.alt="";im.src=f;im.style.minHeight="60vh";im.onload=()=>im.style.minHeight="";pg.appendChild(im)});
  rd.style.display="flex";pg.scrollTop=0;if(push)history.pushState({r:1},"")}
 function close(){rd.style.display="none"}
 document.getElementById("back").onclick=()=>history.state&&history.state.r?history.back():close();
